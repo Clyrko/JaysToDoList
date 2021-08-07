@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UITableViewController {
     
-    let item: [String] = [
+    var item: [String] = [
         
         "Find Mike",
         "Bug Eggos",
@@ -52,6 +52,27 @@ class HomeViewController: UITableViewController {
         
         print(item[indexPath.row])
     }
+    
+    @IBAction func AddButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add New ToDo list item", message: <#T##String?#>, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            
+            self.item.append(textField.text!)
+            self.tableView.reloadData()
+        }
+        
+        alert.addAction(action)
+        alert.addTextField { (alertTextField) in
+            
+            alertTextField.placeholder = "Create New Item"
+            textField = alertTextField
+        }
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     
 }
 
