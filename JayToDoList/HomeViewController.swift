@@ -17,9 +17,15 @@ class HomeViewController: UITableViewController {
         
     ]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let items = defaults.array(forKey: "ToDoListArray") as? [String] {
+            
+            item = items
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,10 +62,11 @@ class HomeViewController: UITableViewController {
     @IBAction func AddButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
-        let alert = UIAlertController(title: "Add New ToDo list item", message: <#T##String?#>, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add New ToDo list item", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             
             self.item.append(textField.text!)
+            self.defaults.set(self.item, forKey: "ToDoListArray")
             self.tableView.reloadData()
         }
         
